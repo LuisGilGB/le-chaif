@@ -1,48 +1,28 @@
 'use client';
 
-import { useActions, useUIState } from 'ai/rsc';
-import { nanoid } from 'nanoid';
+import { PromptForm } from '@/components/PromptForm';
+import { TooltipProvider } from '@/components/ui/Tooltip';
+import { useUIState } from 'ai/rsc';
 import { useState } from 'react';
 import { ClientMessage } from './actions';
 
 const Chat = () => {
   const [input, setInput] = useState<string>('');
   const [conversation, setConversation] = useUIState();
-  const { continueConversation } = useActions();
 
   return (
-    <div>
+    <TooltipProvider>
       <div>
-        {conversation.map((message: ClientMessage) => (
-          <div key={message.id}>
-            {message.role}: {message.display}
-          </div>
-        ))}
+        <div>
+          {conversation.map((message: ClientMessage) => (
+            <div key={message.id}>
+              {message.role}: {message.display}
+            </div>
+          ))}
+        </div>
+        <PromptForm input={input} setInput={setInput} />
       </div>
-      <div>
-        <input
-          type="text"
-          value={input}
-          onChange={event => {
-            setInput(event.target.value);
-          }}
-        />
-        <button
-          onClick={async () => {
-            setConversation((currentConversation: ClientMessage[]) => [
-              ...currentConversation,
-              { id: nanoid(), role: 'user', display: input },
-            ]);
-
-            const message = await continueConversation(input);
-
-            setConversation((currentConversation: ClientMessage[]) => [...currentConversation, message]);
-          }}
-        >
-          Send Message
-        </button>
-      </div>
-    </div>
+    </TooltipProvider>
   );
 };
 
