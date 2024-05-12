@@ -1,9 +1,9 @@
 import clsx from 'clsx';
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+import { Inter as FontSans } from 'next/font/google';
 import './globals.css';
 
-const inter = Inter({ subsets: ['latin'] });
+const fontSans = FontSans({ subsets: ['latin'], variable: '--font-sans' });
 
 export const metadata: Metadata = {
   title: 'Cocineta',
@@ -16,7 +16,7 @@ const RootLayout = ({
   children: React.ReactNode;
 }>) => (
   <html lang="en">
-    <body className={clsx('w-dvw h-dvh', inter.className)}>{children}</body>
+    <body className={clsx('w-dvw h-dvh', fontSans.className)}>{children}</body>
   </html>
 );
 
