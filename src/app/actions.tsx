@@ -1,5 +1,6 @@
 'use server';
 
+import { recipeSchema } from '@/schemas/recipe.schema';
 import { openai } from '@ai-sdk/openai';
 import { createAI, getMutableAIState, streamUI } from 'ai/rsc';
 import { nanoid } from 'nanoid';
@@ -36,24 +37,37 @@ export async function continueConversation(input: string): Promise<ClientMessage
       showIngredients: {
         description: 'Get the ingredients for a recipe',
         parameters: z.object({
-          recipeName: z.string().describe('The name of the recipe to get ingredients for'),
-          ingredients: z.array(z.string()).describe('The ingredients to use in the recipe'),
+          recipe: recipeSchema,
         }),
-        generate: async ({ recipeName, ingredients }) => {
+        generate: async ({ recipe }) => {
           history.done((messages: ServerMessage[]) => [
             ...messages,
             {
               role: 'assistant',
-              content: `Showing ingredients for ${recipeName}`,
+              content: `Showing ingredients for ${recipe.name}`,
             },
           ]);
 
           return (
             <div className="rounded bg-slate-200 p-4 flex flex-col gap-4">
-              <p>Ingredients for {recipeName}</p>
+              <p>Ingredients for {recipe.name}</p>
               <ul>
-                {ingredients.map(ingredient => (
-                  <li key={ingredient}>{ingredient}</li>
+                {recipe.ingredients.map(ingredient => (
+                  <li key={ingredient.name}>{ingredient.name}</li>
+                ))}
+              </ul>
+              <p>Preparation steps:</p>
+              <ol>
+                {recipe.preparationSteps.map((step, i) => (
+                  <li key={i}>{step}</li>
+                ))}
+              </ol>
+              <p>Estimated time: {recipe.estimatedTime}</p>
+              <p>Required ability: {recipe.requiredAbility}</p>
+              <p>Required tools:</p>
+              <ul>
+                {recipe.requiredTools.map(tool => (
+                  <li key={tool}>{tool}</li>
                 ))}
               </ul>
             </div>
