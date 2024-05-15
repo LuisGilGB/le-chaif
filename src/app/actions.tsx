@@ -1,5 +1,6 @@
 'use server';
 
+import RecipeCard from '@/components/recipe/RecipeCard';
 import { recipeSchema } from '@/schemas/recipe.schema';
 import { openai } from '@ai-sdk/openai';
 import { createAI, getMutableAIState, streamUI } from 'ai/rsc';
@@ -48,30 +49,7 @@ export async function continueConversation(input: string): Promise<ClientMessage
             },
           ]);
 
-          return (
-            <div className="rounded bg-slate-200 p-4 flex flex-col gap-4">
-              <p>Ingredients for {recipe.name}</p>
-              <ul>
-                {recipe.ingredients.map(ingredient => (
-                  <li key={ingredient.name}>{ingredient.name}</li>
-                ))}
-              </ul>
-              <p>Preparation steps:</p>
-              <ol>
-                {recipe.preparationSteps.map((step, i) => (
-                  <li key={i}>{step}</li>
-                ))}
-              </ol>
-              <p>Estimated time: {recipe.estimatedTime}</p>
-              <p>Required ability: {recipe.requiredAbility}</p>
-              <p>Required tools:</p>
-              <ul>
-                {recipe.requiredTools.map(tool => (
-                  <li key={tool}>{tool}</li>
-                ))}
-              </ul>
-            </div>
-          );
+          return <RecipeCard recipe={recipe} />;
         },
       },
     },
