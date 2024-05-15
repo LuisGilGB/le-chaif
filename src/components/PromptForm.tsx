@@ -5,7 +5,6 @@ import { UserMessage } from '@/components/Message';
 
 import { Button } from '@/components/ui/Button';
 import { IconArrowElbow, IconPlus } from '@/components/ui/Icons';
-import { Textarea } from '@/components/ui/Textarea';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/Tooltip';
 import { useEnterSubmit } from '@/lib/hooks/useEnterSubmit';
 
@@ -13,6 +12,7 @@ import { useActions, useUIState } from 'ai/rsc';
 import { nanoid } from 'nanoid';
 import { useRouter } from 'next/navigation';
 import * as React from 'react';
+import Textarea from 'react-textarea-autosize';
 
 export const PromptForm = ({ input, setInput }: { input: string; setInput: (value: string) => void }) => {
   const router = useRouter();
@@ -78,7 +78,7 @@ export const PromptForm = ({ input, setInput }: { input: string; setInput: (valu
           ref={inputRef}
           tabIndex={0}
           onKeyDown={onKeyDown}
-          placeholder="Send a message."
+          placeholder="Ask for a recipe..."
           className="min-h-[60px] w-full resize-none bg-transparent px-4 py-[1.3rem] focus-within:outline-none sm:text-sm"
           autoFocus
           spellCheck={false}
