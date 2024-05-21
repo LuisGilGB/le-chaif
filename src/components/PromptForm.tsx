@@ -48,7 +48,7 @@ export const PromptForm = ({ input, setInput }: { input: string; setInput: (valu
           {
             id: nanoid(),
             role: 'user',
-            display: <UserMessage>{value}</UserMessage>,
+            display: <UserMessage className="self-end ml-4">{value}</UserMessage>,
           },
         ]);
 

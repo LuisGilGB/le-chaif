@@ -1,5 +1,6 @@
 'use server';
 
+import { BotMessage } from '@/components/Message';
 import RecipeCard from '@/components/recipe/RecipeCard';
 import { recipeSchema } from '@/schemas/recipe.schema';
 import { openai } from '@ai-sdk/openai';
@@ -32,11 +33,11 @@ export async function continueConversation(input: string): Promise<ClientMessage
         history.done((messages: ServerMessage[]) => [...messages, { role: 'assistant', content }]);
       }
 
-      return <div>{content}</div>;
+      return <BotMessage className="self-start mr-4">{content}</BotMessage>;
     },
     tools: {
-      showIngredients: {
-        description: 'Get the ingredients for a recipe',
+      getRecipe: {
+        description: 'Return a recipe with its ingredients, instructions, image, required toold and more',
         parameters: z.object({
           recipe: recipeSchema,
         }),

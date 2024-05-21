@@ -1,6 +1,6 @@
 'use client';
 
-import { IconOpenAI, IconUser } from '@/components/ui/Icons';
+import { IconOpenAI } from '@/components/ui/Icons';
 import { Spinner } from '@/components/ui/Spinner';
 import { useStreamableText } from '@/lib/hooks/useStreamableText';
 import { cn } from '@/lib/utils';
@@ -11,42 +11,38 @@ import { MemoizedReactMarkdown } from './Markdown';
 
 // Different types of message bubbles.
 
-export const UserMessage = ({ children }: { children: React.ReactNode }) => (
-  <div className="group relative flex items-start md:-ml-12">
-    <div className="flex size-[25px] shrink-0 select-none items-center justify-center rounded-md border bg-background shadow-sm">
-      <IconUser />
-    </div>
-    <div className="ml-4 flex-1 space-y-2 overflow-hidden pl-2">{children}</div>
+interface UserMessageProps {
+  children: React.ReactNode;
+  className?: string;
+}
+
+export const UserMessage = ({ children, className }: UserMessageProps) => (
+  <div className={cn('group bg-amber-200 rounded-b-xl rounded-tl-xl text-right px-4 py-2 overflow-hidden', className)}>
+    {children}
   </div>
 );
 
-export const BotMessage = ({
-  content,
-  className,
-}: {
-  content: string | StreamableValue<string>;
+interface BotMessageProps {
+  children: string | StreamableValue<string>;
   className?: string;
-}) => {
-  const text = useStreamableText(content);
+}
+
+export const BotMessage = ({ children, className }: BotMessageProps) => {
+  const text = useStreamableText(children);
 
   return (
-    <div className={cn('group relative flex items-start md:-ml-12', className)}>
-      <div className="flex size-[24px] shrink-0 select-none items-center justify-center rounded-md border bg-primary text-primary-foreground shadow-sm">
-        <IconOpenAI />
-      </div>
-      <div className="ml-4 flex-1 space-y-2 overflow-hidden px-1">
-        <MemoizedReactMarkdown
-          className="prose break-words dark:prose-invert prose-p:leading-relaxed prose-pre:p-0"
-          remarkPlugins={[remarkGfm, remarkMath]}
-          components={{
-            p({ children }) {
-              return <p className="mb-2 last:mb-0">{children}</p>;
-            },
-          }}
-        >
-          {text}
-        </MemoizedReactMarkdown>
-      </div>
+    <div className={cn('group bg-sky-200 rounded-b-xl rounded-tr-xl text-left px-4 py-2 overflow-hidden', className)}>
+      <MemoizedReactMarkdown
+        className="prose break-words dark:prose-invert prose-p:leading-relaxed prose-pre:p-0"
+        remarkPlugins={[remarkGfm, remarkMath]}
+        components={{
+          p({ children }) {
+            return <p className="mb-2 last:mb-0">{children}</p>;
+          },
+        }}
+      >
+        {text}
+      </MemoizedReactMarkdown>
     </div>
   );
 };
