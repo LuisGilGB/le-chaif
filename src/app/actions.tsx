@@ -25,6 +25,8 @@ export async function continueConversation(input: string): Promise<ClientMessage
 
   const history = getMutableAIState();
 
+  const newId = nanoid();
+
   const result = await streamUI({
     model: openai('gpt-3.5-turbo'),
     messages: [...history.get(), { role: 'user', content: input }],
@@ -33,7 +35,11 @@ export async function continueConversation(input: string): Promise<ClientMessage
         history.done((messages: ServerMessage[]) => [...messages, { role: 'assistant', content }]);
       }
 
-      return <BotMessage className="self-start mr-4">{content}</BotMessage>;
+      return (
+        <BotMessage key={newId} className="self-start mr-4">
+          {content}
+        </BotMessage>
+      );
     },
     tools: {
       getRecipe: {
@@ -50,14 +56,14 @@ export async function continueConversation(input: string): Promise<ClientMessage
             },
           ]);
 
-          return <RecipeCard recipe={recipe} />;
+          return <RecipeCard key={newId} recipe={recipe} />;
         },
       },
     },
   });
 
   return {
-    id: nanoid(),
+    id: newId,
     role: 'assistant',
     display: result.value,
   };

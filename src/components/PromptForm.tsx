@@ -43,14 +43,21 @@ export const PromptForm = ({ input, setInput }: { input: string; setInput: (valu
         if (!value) return;
 
         // Optimistically add user message UI
-        setMessages(currentMessages => [
-          ...currentMessages,
-          {
-            id: nanoid(),
-            role: 'user',
-            display: <UserMessage className="self-end ml-4">{value}</UserMessage>,
-          },
-        ]);
+        setMessages(currentMessages => {
+          const newId = nanoid();
+          return [
+            ...currentMessages,
+            {
+              id: newId,
+              role: 'user',
+              display: (
+                <UserMessage key={newId} className="self-end ml-4">
+                  {value}
+                </UserMessage>
+              ),
+            },
+          ];
+        });
 
         // Submit and get response message
         const responseMessage = await continueConversation(value);
