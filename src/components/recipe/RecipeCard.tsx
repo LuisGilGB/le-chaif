@@ -3,14 +3,13 @@
  * @see https://v0.dev/t/ZqUV1RJsmfd
  * Documentation: https://v0.dev/docs#integrating-generated-code-into-your-nextjs-app
  */
+import CollapsibleBlock from '@/components/CollapsibleBlock';
 import FiveStarsRating from '@/components/FiveStarsRating';
 import IngredientSummary from '@/components/recipe/IngredientSummary';
 import { Badge } from '@/components/ui/Badge';
-import { Collapsible, CollapsibleContent } from '@/components/ui/Collapsible';
 import Image from '@/components/ui/Image';
 import { cookingAbilityService } from '@/domain/CookingAbility';
 import { Recipe } from '@/domain/Recipe';
-import { CollapseIcon } from 'next/dist/client/components/react-dev-overlay/internal/icons/CollapseIcon';
 import Link from 'next/link';
 
 interface RecipeCardProps {
@@ -24,29 +23,20 @@ export const RecipeCard = ({ recipe }: RecipeCardProps) => (
         <header>
           <h2 className="text-2xl font-bold">{recipe.name}</h2>
         </header>
-        <section className="space-y-4 order-2 md:order-1">
-          <Collapsible>
-            <header className="flex items-center justify-between">
-              <h3 className="text-lg font-medium">Ingredients</h3>
-              <CollapseIcon />
-            </header>
-            <CollapsibleContent>
-              <ul className="space-y-2">
-                {recipe.ingredients.map((ingredient, i) => (
-                  <IngredientSummary key={i} ingredient={ingredient} />
-                ))}
-              </ul>
-            </CollapsibleContent>
-          </Collapsible>
-        </section>
-        <section className="space-y-4 order-3 md:order-2">
-          <h3 className="text-lg font-medium">Preparation</h3>
+        <CollapsibleBlock title="Ingredients">
+          <ul className="space-y-2">
+            {recipe.ingredients.map((ingredient, i) => (
+              <IngredientSummary key={i} ingredient={ingredient} />
+            ))}
+          </ul>
+        </CollapsibleBlock>
+        <CollapsibleBlock title="Preparation">
           <ol className="space-y-2 list-decimal pl-4">
             {recipe.preparationSteps.map((step, i) => (
               <li key={i}>{step}</li>
             ))}
           </ol>
-        </section>
+        </CollapsibleBlock>
         <section className="grid grid-cols-2 gap-4 order-4">
           <div>
             <h3 className="text-lg font-medium">Total Time</h3>
