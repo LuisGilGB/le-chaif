@@ -5,7 +5,7 @@ import { TooltipProvider } from '@/components/ui/Tooltip';
 import useScrollAnchor from '@/lib/hooks/useScrollAnchor';
 import { cn } from '@/lib/utils';
 import { useUIState } from 'ai/rsc';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ClientMessage } from './actions';
 
 interface ChatProps {
@@ -17,7 +17,12 @@ const Chat = ({ className, messagesWrapperClassName }: ChatProps) => {
   const [input, setInput] = useState<string>('');
   const [conversation, setConversation] = useUIState();
 
-  const { messagesRef, scrollRef } = useScrollAnchor();
+  const { messagesRef, scrollRef, scrollToBottom } = useScrollAnchor();
+
+  useEffect(() => {
+    // Scroll to bottom whenever the conversation changes
+    scrollToBottom?.();
+  }, [conversation, scrollRef, scrollToBottom]);
 
   return (
     <TooltipProvider>
