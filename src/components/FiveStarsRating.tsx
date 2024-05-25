@@ -11,7 +11,7 @@ const FiveStarsRating = ({ rating, className }: FiveStarsRatingProps) => (
     {Array.from({ length: 5 }).map((_, index) => (
       <IconStar
         key={index}
-        className={`size-5 ${index < rating ? 'fill-primary' : 'fill-muted stroke-muted-foreground'}`}
+        className={`size-5 ${index < rating ? 'fill-sky-500 dark:fill-sky-400 stroke-sky-500 dark:stroke-sky-400' : 'fill-sky-200 stroke-sky-500 dark:fill-sky-700 dark:stroke-sky-400'}`}
       />
     ))}
   </div>

@@ -20,11 +20,11 @@ const IngredientSummary = ({ ingredient, className }: IngredientSummaryProps) =>
     <div className="flex-1">
       <div className="flex justify-between items-start">
         <div>
-          <h4 className="font-medium">{ingredient.name}</h4>
-          <p className="text-sm text-gray-500 dark:text-gray-400">{ingredient.quantity}</p>
+          <h4 className="font-medium text-sky-900 dark:text-sky-50">{ingredient.name}</h4>
+          <p className="text-sm text-sky-500 dark:text-sky-400">{ingredient.quantity}</p>
         </div>
         {!!ingredient.shopLink && (
-          <Link className="text-primary hover:underline whitespace-nowrap" href={ingredient.shopLink}>
+          <Link className="text-sky-500 hover:text-sky-600 whitespace-nowrap" href={ingredient.shopLink}>
             Buy Now
           </Link>
         )}
@@ -32,7 +32,7 @@ const IngredientSummary = ({ ingredient, className }: IngredientSummaryProps) =>
       {!!ingredient.preparationsAdvices?.length && (
         <ul className="pl-4">
           {ingredient.preparationsAdvices.map((advice, i) => (
-            <li key={i} className="text-sm text-gray-500 dark:text-gray-400">
+            <li key={i} className="text-sm text-sky-500 dark:text-sky-400">
               {advice}
             </li>
           ))}
