@@ -28,7 +28,7 @@ export async function continueConversation(input: string): Promise<ClientMessage
   const newId = nanoid();
 
   const result = await streamUI({
-    model: openai('gpt-3.5-turbo'),
+    model: openai('gpt-4o'),
     messages: [...history.get(), { role: 'user', content: input }],
     text: ({ content, done }) => {
       if (done) {
