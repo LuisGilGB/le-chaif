@@ -1,13 +1,13 @@
 import clsx from 'clsx';
-import type { Metadata } from 'next';
-import { Inter as FontSans } from 'next/font/google';
+import type {Metadata} from 'next';
+import {Inter as FontSans} from 'next/font/google';
 import './globals.css';
 
 const fontSans = FontSans({ subsets: ['latin'], variable: '--font-sans' });
 
 export const metadata: Metadata = {
-  title: 'Cocineta',
-  description: 'Your recipe assistant',
+  title: 'Le Chaif',
+  description: 'A chatbot that helps you at your cooking needs providing recipes with the best User Experience.',
 };
 
 const RootLayout = ({
