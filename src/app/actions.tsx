@@ -5,6 +5,7 @@ import RecipeCard from '@/components/recipe/RecipeCard';
 import {recipeSchema} from '@/schemas/recipe.schema';
 import {openai} from '@ai-sdk/openai';
 import {createAI, getMutableAIState, streamUI} from 'ai/rsc';
+import {LoaderCircleIcon} from 'lucide-react';
 import {nanoid} from 'nanoid';
 import {ReactNode} from 'react';
 import {z} from 'zod';
@@ -29,6 +30,10 @@ export async function continueConversation(input: string): Promise<ClientMessage
 
   const result = await streamUI({
     model: openai('gpt-4o'),
+    initial: <div className="flex items-center justify-start gap-x-2">
+      <LoaderCircleIcon className="animate-spin text-sky-400" />
+      Waiting for a response...
+    </div>,
     messages: [...history.get(), { role: 'user', content: input }],
     text: ({ content, done }) => {
       if (done) {
