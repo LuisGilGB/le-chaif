@@ -6,10 +6,10 @@
 import CollapsibleBlock from '@/components/CollapsibleBlock';
 import FiveStarsRating from '@/components/FiveStarsRating';
 import IngredientSummary from '@/components/recipe/IngredientSummary';
-import { Badge } from '@/components/ui/Badge';
+import {Badge} from '@/components/ui/Badge';
 import Image from '@/components/ui/Image';
-import { cookingAbilityService } from '@/domain/CookingAbility';
-import { Recipe } from '@/domain/Recipe';
+import {cookingAbilityService} from '@/domain/CookingAbility';
+import {Recipe} from '@/domain/Recipe';
 import Link from 'next/link';
 
 interface RecipeCardProps {
@@ -17,8 +17,8 @@ interface RecipeCardProps {
 }
 
 export const RecipeCard = ({ recipe }: RecipeCardProps) => (
-  <section className="bg-sky-50 rounded-lg shadow-md overflow-hidden dark:bg-sky-950">
-    <div className="grid md:grid-cols-2">
+  <section className="@container bg-sky-50 rounded-lg shadow-md overflow-hidden dark:bg-sky-950">
+    <div className="grid @md:grid-cols-2">
       <section className="p-8 space-y-6">
         <header>
           <h2 className="text-2xl font-bold text-sky-900 dark:text-sky-50">{recipe.name}</h2>
