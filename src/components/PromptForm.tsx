@@ -1,5 +1,3 @@
-'use client';
-
 import {AI} from '@/app/actions';
 import {UserMessage} from '@/components/Message';
 

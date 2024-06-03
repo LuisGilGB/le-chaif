@@ -30,11 +30,13 @@ export async function continueConversation(input: string): Promise<ClientMessage
 
   const result = await streamUI({
     model: openai('gpt-4o'),
-    initial: <div className="flex items-center justify-start gap-x-2">
-      <LoaderCircleIcon className="animate-spin text-sky-400" />
-      Waiting for a response...
-    </div>,
-    messages: [...history.get(), { role: 'user', content: input }],
+    initial: (
+      <div className="flex items-center justify-start gap-x-2">
+        <LoaderCircleIcon className="animate-spin text-sky-400"/>
+        Waiting for a response...
+      </div>
+    ),
+    messages: [...(history.get() || []), { role: 'user', content: input }],
     text: ({ content, done }) => {
       if (done) {
         history.done((messages: ServerMessage[]) => [...messages, { role: 'assistant', content }]);
