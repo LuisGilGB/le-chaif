@@ -1,6 +1,6 @@
 import Image from '@/components/ui/Image';
-import { Ingredient } from '@/domain/Ingredient';
-import { cn } from '@/lib/utils';
+import {Ingredient} from '@/domain/Ingredient';
+import {cn} from '@/lib/utils';
 import Link from 'next/link';
 
 interface IngredientSummaryProps {
@@ -30,7 +30,7 @@ const IngredientSummary = ({ ingredient, className }: IngredientSummaryProps) =>
         )}
       </div>
       {!!ingredient.preparationsAdvices?.length && (
-        <ul className="pl-4">
+        <ul>
           {ingredient.preparationsAdvices.map((advice, i) => (
             <li key={i} className="text-sm text-sky-500 dark:text-sky-400">
               {advice}

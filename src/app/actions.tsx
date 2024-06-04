@@ -29,7 +29,7 @@ export async function continueConversation(input: string): Promise<ClientMessage
   const newId = nanoid();
 
   const result = await streamUI({
-    model: openai('gpt-4o'),
+    model: openai('gpt-3.5-turbo'),
     initial: (
       <div className="flex items-center justify-start gap-x-2">
         <LoaderCircleIcon className="animate-spin text-sky-400"/>
@@ -50,7 +50,7 @@ export async function continueConversation(input: string): Promise<ClientMessage
     },
     tools: {
       getRecipe: {
-        description: 'Return a recipe with its ingredients, preparation steps, image, required tools and more. Search the web to provide valid links for the recipe image, the ingredients images and the shop links. Preparation steps must not be preceded by a number. All the ingredients must include a quantity expressed in units, weight or any other metric. Be as descriptive as possible with the preparation steps, assuming the reader doesn\'t have knowledge about different cooking techniques. Be exhaustive enumerating the required tools, no matter how trivial it can be (in example: if a wooden spoon is useful, enumerate the wooden spoon). The recipe must include a video link from the web if available.',
+        description: 'Return a recipe with its ingredients, preparation steps, image, required tools and more. Search the web to provide valid links for the recipe image, the ingredients images and the shop links. Preparation steps must not be preceded by a number. All the ingredients must include a quantity expressed in units (if 4 units of that ingredient are required, say 4 units instead of just 4), weight or any other metric. Be as descriptive as possible with the preparation steps, assuming the reader doesn\'t have knowledge about different cooking techniques. Be exhaustive enumerating the required tools, no matter how trivial it can be (for example: if a wooden spoon is useful, enumerate the wooden spoon, if a pot is needed for a secondary task, enumerate the pot). The recipe must include a video link from the web if available.',
         parameters: z.object({
           recipe: recipeSchema,
         }),
