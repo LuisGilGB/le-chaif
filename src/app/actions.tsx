@@ -24,7 +24,7 @@ export interface ClientMessage {
 export async function continueConversation(input: string): Promise<ClientMessage> {
   'use server';
 
-  const history = getMutableAIState();
+  const history = getMutableAIState<ReturnType<typeof createAI<ServerMessage[], ClientMessage[]>>>();
 
   const newId = nanoid();
 
