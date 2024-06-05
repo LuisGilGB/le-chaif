@@ -26,6 +26,8 @@ export async function continueConversation(input: string): Promise<ClientMessage
 
   const history = getMutableAIState<ReturnType<typeof createAI<ServerMessage[], ClientMessage[]>>>();
 
+  history.update([...history.get(), { role: 'user', content: input }]);
+
   const newId = nanoid();
 
   const result = await streamUI({
@@ -36,10 +38,13 @@ export async function continueConversation(input: string): Promise<ClientMessage
         Waiting for a response...
       </div>
     ),
-    messages: [...(history.get() || []), { role: 'user', content: input }],
+    messages: history.get(),
     text: ({ content, done }) => {
       if (done) {
-        history.done((messages: ServerMessage[]) => [...messages, { role: 'assistant', content }]);
+        const pastMessages = history.get() || [];
+        const newMessage: ServerMessage = { role: 'assistant', content };
+        const updatedMessages = [...pastMessages, newMessage];
+        history.done(updatedMessages);
       }
 
       return (
@@ -55,13 +60,10 @@ export async function continueConversation(input: string): Promise<ClientMessage
           recipe: recipeSchema,
         }),
         generate: async ({ recipe }) => {
-          history.done((messages: ServerMessage[]) => [
-            ...messages,
-            {
-              role: 'assistant',
-              content: `Showing ingredients for ${recipe.name}`,
-            },
-          ]);
+          const pastMessages = history.get() || [];
+          const newMessage: ServerMessage = { role: 'assistant', content: `Showing a recipe for ${recipe.name}` };
+          const updatedMessages = [...pastMessages, newMessage];
+          history.done(updatedMessages);
 
           return <RecipeCard key={newId} recipe={recipe} />;
         },
