@@ -97,7 +97,7 @@ export const PromptForm = ({ input, setInput }: { input: string; setInput: (valu
         <div className="absolute right-0 top-[13px] sm:right-4">
           <Tooltip>
             <TooltipTrigger asChild>
-              <Button type="submit" size="icon" className="bg-amber-200 hover:bg-amber-300" disabled={input === ''}>
+              <Button type="submit" size="icon" className="text-gray-900 border border-input bg-amber-100 hover:bg-amber-200 dark:hover:bg-amber-300" disabled={input === ''}>
                 <IconArrowElbow />
                 <span className="sr-only">Send message</span>
               </Button>
