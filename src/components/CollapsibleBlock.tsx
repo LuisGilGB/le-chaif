@@ -1,6 +1,9 @@
+'use client';
+
 import {Button} from '@/components/ui/Button';
 import {Collapsible, CollapsibleContent, CollapsibleTrigger} from '@/components/ui/Collapsible';
 import {cn} from '@/lib/utils';
+import {motion} from 'framer-motion';
 import {ChevronDown} from 'lucide-react';
 import React from 'react';
 
@@ -22,7 +25,16 @@ const CollapsibleBlock = ({ children, title, className }: CollapsibleBlockProps)
           </Button>
         </CollapsibleTrigger>
       </header>
-      <CollapsibleContent className="space-y-4">{children}</CollapsibleContent>
+      <CollapsibleContent className="space-y-4" asChild>
+        <motion.div
+          initial={{ height: 0, opacity: 0, y: -4 }}
+          animate={{ height: 'auto', opacity: 1, y: 0 }}
+          exit={{ height: 0, opacity: 0, y: -4 }}
+          transition={{ duration: 0.3 }}
+        >
+          {children}
+        </motion.div>
+      </CollapsibleContent>
     </section>
   </Collapsible>
 );
