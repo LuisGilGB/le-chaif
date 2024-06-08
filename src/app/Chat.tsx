@@ -43,11 +43,16 @@ const Chat = ({ className, messagesWrapperClassName }: ChatProps) => {
           ref={messagesRef}
         >
           <ErrorBoundary fallbackRender={({ error, resetErrorBoundary }) => (
-            <div className="overflow-x-hidden overflow-y-auto text-red-500 space-y-2">
-              <p>Something went wrong:</p>
-              <p>{error.message}</p>
-              <Button onClick={resetErrorBoundary}>Try again</Button>
+            <>
+              {conversation.slice(0,-1).map((message: ClientMessage) => message.display)}
+            <div className="text-red-500 space-y-2">
+              <p>Something went wrong.</p>
+              <Button className="bg-red-700 hover:bg-red-500 text-white" onClick={() => {
+                setConversation((conversation: ClientMessage[]) => conversation.slice(0, -1));
+                resetErrorBoundary();
+              }}>Ok, I understand</Button>
             </div>
+            </>
           )}>
             {conversation.map((message: ClientMessage) => message.display)}
           </ErrorBoundary>
