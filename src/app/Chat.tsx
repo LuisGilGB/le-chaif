@@ -1,11 +1,13 @@
 'use client';
 
 import {PromptForm} from '@/components/PromptForm';
+import {Button} from '@/components/ui/Button';
 import {TooltipProvider} from '@/components/ui/Tooltip';
 import useScrollAnchor from '@/lib/hooks/useScrollAnchor';
 import {cn} from '@/lib/utils';
 import {useUIState} from 'ai/rsc';
 import {useEffect, useState} from 'react';
+import {ErrorBoundary} from 'react-error-boundary';
 import {ClientMessage} from './actions';
 
 interface ChatProps {
@@ -40,7 +42,15 @@ const Chat = ({ className, messagesWrapperClassName }: ChatProps) => {
           )}
           ref={messagesRef}
         >
-          {conversation.map((message: ClientMessage) => message.display)}
+          <ErrorBoundary fallbackRender={({ error, resetErrorBoundary }) => (
+            <div className="overflow-x-hidden overflow-y-auto text-red-500 space-y-2">
+              <p>Something went wrong:</p>
+              <p>{error.message}</p>
+              <Button onClick={resetErrorBoundary}>Try again</Button>
+            </div>
+          )}>
+            {conversation.map((message: ClientMessage) => message.display)}
+          </ErrorBoundary>
         </div>
         <div className="fixed inset-x-0 bottom-0 w-full pt-4 bg-gradient-to-b from-muted/30 from-0% to-muted/30 to-50% duration-300 ease-in-out animate-in dark:from-background/10 dark:from-10% dark:to-background/80 peer-[[data-state=open]]:group-[]:lg:pl-[250px] peer-[[data-state=open]]:group-[]:xl:pl-[300px]">
           <div className="mx-auto sm:max-w-2xl sm:px-4">
