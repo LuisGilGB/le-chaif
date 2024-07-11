@@ -2,7 +2,7 @@ import {AI} from '@/app/actions';
 import {UserMessage} from '@/components/Message';
 
 import {Button} from '@/components/ui/Button';
-import {IconArrowElbow, IconPlus} from '@/components/ui/Icons';
+import {IconArrowElbow} from '@/components/ui/Icons';
 import {Tooltip, TooltipContent, TooltipTrigger} from '@/components/ui/Tooltip';
 import {useEnterSubmit} from '@/lib/hooks/useEnterSubmit';
 
@@ -62,29 +62,13 @@ export const PromptForm = ({ input, setInput }: { input: string; setInput: (valu
         setMessages(currentMessages => [...currentMessages, responseMessage]);
       }}
     >
-      <div className="relative flex max-h-60 w-full grow flex-col overflow-hidden bg-amber-100 px-8 sm:rounded-md sm:border sm:px-12">
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <Button
-              variant="outline"
-              size="icon"
-              className="absolute left-0 top-[14px] size-8 rounded-full bg-amber-100 p-0 sm:left-4 hover:bg-amber-200 dark:hover:bg-amber-300"
-              onClick={() => {
-                router.push('/new');
-              }}
-            >
-              <IconPlus />
-              <span className="sr-only">New Chat</span>
-            </Button>
-          </TooltipTrigger>
-          <TooltipContent>New Chat</TooltipContent>
-        </Tooltip>
+      <div className="relative flex max-h-60 w-full grow flex-col overflow-hidden bg-amber-100 py-2 pl-4 pr-16 border rounded-md">
         <Textarea
           ref={inputRef}
           tabIndex={0}
           onKeyDown={onKeyDown}
           placeholder="Ask for a recipe..."
-          className="min-h-[60px] w-full resize-none bg-transparent px-4 py-[1.3rem] focus-within:outline-none sm:text-sm"
+          className="min-h-[60px] w-full resize-none bg-transparent p-1 focus-within:outline-none sm:text-sm"
           autoFocus
           spellCheck={false}
           autoComplete="off"
@@ -94,7 +78,7 @@ export const PromptForm = ({ input, setInput }: { input: string; setInput: (valu
           value={input}
           onChange={e => setInput(e.target.value)}
         />
-        <div className="absolute right-0 top-[13px] sm:right-4">
+        <div className="absolute top-[12px] right-4">
           <Tooltip>
             <TooltipTrigger asChild>
               <Button type="submit" size="icon" className="text-gray-900 border border-input bg-amber-100 hover:bg-amber-200 dark:hover:bg-amber-300" disabled={input === ''}>
