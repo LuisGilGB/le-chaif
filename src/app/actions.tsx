@@ -31,7 +31,7 @@ export async function continueConversation(input: string): Promise<ClientMessage
   const newId = nanoid();
 
   const result = await streamUI({
-    model: openai('gpt-3.5-turbo'),
+    model: openai('gpt-4o-mini'),
     initial: (
       <div className="flex items-center justify-start gap-x-2">
         <LoaderCircleIcon className="animate-spin text-sky-400"/>
