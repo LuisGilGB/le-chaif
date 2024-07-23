@@ -6,7 +6,7 @@ import {TooltipProvider} from '@/components/ui/Tooltip';
 import useScrollAnchor from '@/lib/hooks/useScrollAnchor';
 import {cn} from '@/lib/utils';
 import {useUIState} from 'ai/rsc';
-import {useEffect, useState} from 'react';
+import {useLayoutEffect, useState} from 'react';
 import {ErrorBoundary} from 'react-error-boundary';
 import {ClientMessage} from './actions';
 
@@ -21,7 +21,7 @@ const Chat = ({ className, messagesWrapperClassName }: ChatProps) => {
 
   const { messagesRef, scrollRef, scrollToBottom } = useScrollAnchor();
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     // Scroll to bottom whenever the conversation changes
     scrollToBottom?.();
   }, [conversation, scrollRef, scrollToBottom]);
