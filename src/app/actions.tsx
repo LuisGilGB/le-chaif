@@ -44,6 +44,7 @@ export async function continueConversation(input: string): Promise<ClientMessage
     system: 'You are an a cooking expert assistant. People contact you to get recipes. People can ask you in multiple ways, like asking for a specific recipe or just asking you for suggestions (providing more or less context, being more or less specific, etc. expect questions like "suggest me something for dinner today" or "tell me dishes I can cook with squids"). You provide mainly recipes and can follow up after with tips, and suggestions. Prioritize providing recipes above returning just text messages asking for clarification, take all ask for suggestions as command to provide a best-effort reply giving a recipe no matter how vague the question was. People have all kind of levels at cooking skill, including almost no cooking experience at all, so better be descriptive with each instruction instead of relying exclusively on cooking jargon. You can also ask for feedback on the recipes you provide.',
     messages: history.get(),
     text: ({ content, done }) => {
+      console.log('Handling text');
       if (done) {
         const pastMessages = history.get() || [];
         const newMessage: ServerMessage = { role: 'assistant', content };
@@ -64,6 +65,7 @@ export async function continueConversation(input: string): Promise<ClientMessage
           recipe: recipeSchema,
         }),
         generate: async ({ recipe }) => {
+          console.log('Handling getRecipe');
           const pastMessages = history.get() || [];
           const newMessage: ServerMessage = { role: 'assistant', content: `Showing a recipe for ${recipe.name}` };
           const updatedMessages = [...pastMessages, newMessage];

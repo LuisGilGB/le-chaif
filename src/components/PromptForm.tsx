@@ -8,12 +8,10 @@ import {useEnterSubmit} from '@/lib/hooks/useEnterSubmit';
 
 import {useActions, useUIState} from 'ai/rsc';
 import {nanoid} from 'nanoid';
-import {useRouter} from 'next/navigation';
 import * as React from 'react';
 import Textarea from 'react-textarea-autosize';
 
 export const PromptForm = ({ input, setInput }: { input: string; setInput: (value: string) => void }) => {
-  const router = useRouter();
   const { formRef, onKeyDown } = useEnterSubmit();
   const inputRef = React.useRef<HTMLTextAreaElement>(null);
   const { continueConversation } = useActions();
