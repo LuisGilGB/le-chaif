@@ -4,7 +4,8 @@ import {BotMessage} from '@/components/Message';
 import RecipeCard from '@/components/recipe/RecipeCard';
 import {recipeSchema} from '@/schemas/recipe.schema';
 import {openai} from '@ai-sdk/openai';
-import {createAI, getMutableAIState, streamUI} from 'ai/rsc';
+import {streamObject} from 'ai';
+import {createAI, createStreamableValue, getMutableAIState, streamUI} from 'ai/rsc';
 import {LoaderCircleIcon} from 'lucide-react';
 import {nanoid} from 'nanoid';
 import {ReactNode} from 'react';
@@ -21,7 +22,7 @@ export interface ClientMessage {
   display: ReactNode;
 }
 
-export async function continueConversation(input: string): Promise<ClientMessage> {
+export const continueConversation = async (input: string): Promise<ClientMessage> => {
   'use server';
 
   const history = getMutableAIState<ReturnType<typeof createAI<ServerMessage[], ClientMessage[]>>>();
@@ -82,6 +83,28 @@ export async function continueConversation(input: string): Promise<ClientMessage
     role: 'assistant',
     display: result.value,
   };
+};
+
+export const generateRecipe = async (input: string) => {
+  const stream = createStreamableValue();
+
+  (async () => {
+    const { partialObjectStream } = await streamObject({
+      model: openai('gpt-4o-mini'),
+      system: 'You are an expert in cooking and you provide recipes. You can also ask for feedback on the recipes you provide.',
+      temperature: 0.8,
+      prompt: input,
+      schema: recipeSchema,
+    });
+
+    for await (const delta of partialObjectStream) {
+      stream.update(delta);
+    }
+
+    stream.done()
+  })();
+
+  return {object: stream.value}
 }
 
 export const AI = createAI<ServerMessage[], ClientMessage[]>({
