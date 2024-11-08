@@ -1,13 +1,11 @@
 'use client';
 
 import {generateRecipe} from '@/app/actions';
-import RecipeCard from '@/components/recipe/RecipeCard';
 import {Button} from '@/components/ui/Button';
 import {Card, CardContent, CardHeader, CardTitle} from '@/components/ui/Card';
 import {Input} from '@/components/ui/Input';
 import {Recipe} from '@/domain/Recipe';
 import {readStreamableValue} from 'ai/rsc';
-import Form from 'next/form';
 import {useState} from 'react';
 
 const NewRecipePage = () => {
@@ -31,16 +29,19 @@ const NewRecipePage = () => {
           <CardTitle>Ask for a new recipe</CardTitle>
         </CardHeader>
         <CardContent>
-          <Form action={doSubmit} className="flex gap-2">
+          <form action={doSubmit} className="flex gap-2">
             <Input
+              name="prompt"
               placeholder="Enter a dish for its recipe..."
               className="flex-grow"
             />
             <Button type="submit">Generate Recipe</Button>
-          </Form>
+          </form>
         </CardContent>
       </Card>
-      {!!recipe && <RecipeCard recipe={recipe} />}
+      {!!recipe && (
+        <pre className="prose dark:prose-invert">{JSON.stringify(recipe, null, 2)}</pre>
+      )}
     </div>
   );
 }
