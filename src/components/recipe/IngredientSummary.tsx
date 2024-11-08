@@ -31,7 +31,7 @@ const IngredientSummary = ({ ingredient, className }: IngredientSummaryProps) =>
       </div>
       {!!ingredient.preparationsAdvices?.length && (
         <ul>
-          {ingredient.preparationsAdvices.map((advice, i) => (
+          {ingredient.preparationsAdvices?.map((advice, i) => (
             <li key={i} className="text-sm text-sky-500 dark:text-sky-400">
               {advice}
             </li>

@@ -1,6 +1,7 @@
 'use client';
 
 import {generateRecipe} from '@/app/actions';
+import RecipeCard from '@/components/recipe/RecipeCard';
 import {Button} from '@/components/ui/Button';
 import {Card, CardContent, CardHeader, CardTitle} from '@/components/ui/Card';
 import {Input} from '@/components/ui/Input';
@@ -40,7 +41,7 @@ const NewRecipePage = () => {
         </CardContent>
       </Card>
       {!!recipe && (
-        <pre className="prose dark:prose-invert">{JSON.stringify(recipe, null, 2)}</pre>
+        <RecipeCard recipe={recipe} />
       )}
     </div>
   );
