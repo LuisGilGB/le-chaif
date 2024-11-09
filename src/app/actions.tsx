@@ -101,10 +101,12 @@ export const generateRecipe = async (input: string) => {
       stream.update(delta);
     }
 
-    stream.done()
+    stream.done();
   })();
 
-  return {object: stream.value}
+  return {
+    object: stream.value,
+  }
 }
 
 export const AI = createAI<ServerMessage[], ClientMessage[]>({

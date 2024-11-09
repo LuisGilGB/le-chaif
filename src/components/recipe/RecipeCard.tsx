@@ -25,14 +25,14 @@ export const RecipeCard = ({ recipe }: RecipeCardProps) => (
         </header>
         <CollapsibleBlock title="Ingredients">
           <ul className="space-y-2">
-            {recipe.ingredients?.map((ingredient, i) => (
+            {recipe.ingredients.map((ingredient, i) => (
               <IngredientSummary key={i} ingredient={ingredient} />
             ))}
           </ul>
         </CollapsibleBlock>
         <CollapsibleBlock title="Preparation">
           <ol className="space-y-2 list-decimal pl-4">
-            {recipe.preparationSteps?.map((step, i) => (
+            {recipe.preparationSteps.map((step, i) => (
               <li className="text-sky-900 dark:text-sky-50" key={i}>
                 {step}
               </li>
@@ -51,7 +51,7 @@ export const RecipeCard = ({ recipe }: RecipeCardProps) => (
           <section className="col-span-2">
             <h3 className="text-lg font-medium text-sky-900 dark:text-sky-50">Tools</h3>
             <div className="flex flex-wrap gap-2">
-              {recipe.requiredTools?.map((tool, i) => (
+              {recipe.requiredTools.map((tool, i) => (
                 <Badge
                   key={i}
                   className="bg-sky-100 text-sky-900 dark:bg-sky-800 dark:text-sky-50 hover:bg-sky-200 dark:hover:bg-sky-700"

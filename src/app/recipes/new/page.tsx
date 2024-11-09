@@ -7,10 +7,12 @@ import {Card, CardContent, CardHeader, CardTitle} from '@/components/ui/Card';
 import {Input} from '@/components/ui/Input';
 import {Recipe} from '@/domain/Recipe';
 import {readStreamableValue} from 'ai/rsc';
+import {LoaderCircleIcon} from 'lucide-react';
 import {useState} from 'react';
 
 const NewRecipePage = () => {
   const [recipe, setRecipe] = useState<Recipe | null>(null);
+  const [isDone, setIsDone] = useState<boolean>(false);
 
   const doSubmit = async (formData: FormData) => {
     const prompt = formData.get('prompt') as string;
@@ -21,6 +23,8 @@ const NewRecipePage = () => {
         setRecipe(delta);
       }
     }
+
+    setIsDone(true);
   };
 
   return (
@@ -40,8 +44,12 @@ const NewRecipePage = () => {
           </form>
         </CardContent>
       </Card>
-      {!!recipe && (
-        <RecipeCard recipe={recipe} />
+      {isDone ? (
+        <RecipeCard recipe={recipe!} />
+      ) : !!recipe && (
+        <p className="flex justify-center items-center gap-x-4">
+          Generating recipe... <LoaderCircleIcon className="animate-spin" />
+        </p>
       )}
     </div>
   );
