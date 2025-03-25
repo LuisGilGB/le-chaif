@@ -1,3 +1,10 @@
+# Le ChAIf
+
+AI Chatbot enhanced with some rich UI components that helps users with their meals by suggesting dishes and indicating what ingredients, tools and steps are required for its preparation.
+
+[Live demo](https://le-chaif.vercel.app/)
+
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
